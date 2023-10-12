@@ -1,0 +1,14 @@
+package com.example.springbootidstar.repository;
+
+import com.example.springbootidstar.model.oauth.User;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Long> {
+    @Query("FROM User u WHERE LOWER(u.username) = LOWER(?1)")
+    User findOneByUsername(String username);
+    @Query("FROM User u WHERE u.otp = ?1")
+    User findOneByOTP(String otp);
+    @Query("FROM User u WHERE LOWER(u.username) = LOWER(:username)")
+    User checkExistingEmail(String username);
+}
